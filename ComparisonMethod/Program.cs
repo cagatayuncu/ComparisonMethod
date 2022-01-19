@@ -9,6 +9,7 @@ namespace ComparisonMethod // Note: actual namespace depends on the project name
         private static void Main(string[] args)
         {
             Console.WriteLine("ListAndHashPerformance");
+            Console.WriteLine("");
             ListAndHashPerformance();
 
 
@@ -18,8 +19,9 @@ namespace ComparisonMethod // Note: actual namespace depends on the project name
         {
             int times = 10000000;
 
+            Console.WriteLine("String List And Hash");
 
-            for (int listSize = 1; listSize < 10; listSize++)
+            for (int listSize = 1; listSize < 50; listSize +=3)
             {
                 List<string> list = new List<string>();
                 HashSet<string> hashset = new HashSet<string>();
@@ -57,7 +59,7 @@ namespace ComparisonMethod // Note: actual namespace depends on the project name
                 Console.WriteLine();
             }
 
-
+            Console.WriteLine("String Object And Hash");
             for (int listSize = 1; listSize < 50; listSize += 3)
             {
                 List<object> list = new List<object>();
@@ -98,6 +100,49 @@ namespace ComparisonMethod // Note: actual namespace depends on the project name
                                   timer.ElapsedMilliseconds + "ms");
                 Console.WriteLine();
             }
+
+            Console.WriteLine("Integer List And Hash");
+
+            for (int listSize = 1; listSize < 200; listSize+=3)
+            {
+                List<int> list = new List<int>();
+                HashSet<int> hashset = new HashSet<int>();
+
+                for (int i = 0; i < listSize; i++)
+                {
+                    list.Add(1 + i);
+                    hashset.Add(1 + i);
+                }
+
+                Stopwatch timer = new Stopwatch();
+                timer.Start();
+                for (int i = 0; i < times; i++)
+                {
+                    list.Remove(1);
+                    list.Add(1);
+                }
+
+                timer.Stop();
+                Console.WriteLine(listSize + " item LIST int time: " +
+                                  timer.ElapsedMilliseconds + "ms");
+
+
+                timer = new Stopwatch();
+                timer.Start();
+                for (int i = 0; i < times; i++)
+                {
+                    hashset.Remove(1);
+                    hashset.Add(1);
+                }
+
+                timer.Stop();
+                Console.WriteLine(listSize + " item HASHSET int time: " +
+                                  timer.ElapsedMilliseconds + "ms");
+                Console.WriteLine();
+            }
+
+
+    
 
             Console.ReadLine();
         }
